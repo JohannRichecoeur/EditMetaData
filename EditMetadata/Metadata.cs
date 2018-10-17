@@ -13,7 +13,7 @@ namespace EditMetadata
         {
             var image = Image.FromFile(path);
             var propertyItem = image.PropertyItems.First();
-            
+
             if (propertyItem != null)
             {
                 var newItem = image.PropertyItems[1];
@@ -38,7 +38,7 @@ namespace EditMetadata
         {
             var image = Image.FromFile(path);
             var propertyItem = image.PropertyItems.FirstOrDefault(i => i.Id == 36868);
-            
+
             try
             {
                 var encoding = new ASCIIEncoding();
@@ -55,10 +55,10 @@ namespace EditMetadata
 
         public static DateTime ExtractNewDate(string path)
         {
-            var filename = path.Split(new string[] { "\\" }, StringSplitOptions.None).Last().Split('-').FirstOrDefault();
+            var filename = path.Split(new [] { "\\" }, StringSplitOptions.None).Last().Split('-').FirstOrDefault();
             try
             {
-                if (filename.StartsWith("_"))
+                if (filename != null && filename.StartsWith("_"))
                 {
                     filename = filename.Replace("_", "19");
                 }
@@ -69,8 +69,8 @@ namespace EditMetadata
 
                 return new DateTime(
                     int.Parse(filename.Substring(0, 4)),
-                    int.Parse(filename.Substring(4,2)),
-                    int.Parse(filename.Substring(6,2)) == 0 ? 1 : int.Parse(filename.Substring(6, 2)));
+                    int.Parse(filename.Substring(4, 2)),
+                    int.Parse(filename.Substring(6, 2)) == 0 ? 1 : int.Parse(filename.Substring(6, 2)));
             }
             catch (Exception)
             {

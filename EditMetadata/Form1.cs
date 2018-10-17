@@ -49,17 +49,20 @@ namespace EditMetadata
         {
             this.status.Text = "Ongoing";
             this.status.ForeColor = Color.Gray;
-            ProcessingLabel.Refresh();
 
+            var counter = 1;
             foreach (var g in from DataGridViewRow g in this.dataGridView.Rows where g.Cells[0].Value != null && g.Cells[1].Value != null select g)
             {
+                ProcessingLabel.Text = counter + " sur " + (this.dataGridView.RowCount - 1);
+                ProcessingLabel.Refresh();
+
                 Metadata.ChangeDateTime((string)g.Cells[0].Value, (DateTime)g.Cells[2].Value);
+                counter++;
             }
 
             this.status.Text = "DONE";
             this.status.ForeColor = Color.ForestGreen;
-            ProcessingLabel.Refresh();
-
+  
             this.ReloadDates();
         }
 
@@ -112,7 +115,7 @@ namespace EditMetadata
 
             foreach (var filePath in filePaths)
             {
-                ProcessingLabel.Text = counter + " sur " + filePaths.Count();
+                ProcessingLabel.Text = counter + " sur " + filePaths.Length;
                 ProcessingLabel.Refresh();
 
                 var date = Metadata.GetDate(filePath);
